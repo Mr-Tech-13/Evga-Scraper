@@ -64,7 +64,7 @@ export function sendDiscordMessage(link: Link, store: Store) {
             client,
             message: client.send(notifyText.join(' '), {
               embeds: [embed],
-              username: 'StockHammer By MNP Industries',
+              username: 'StockHammer',
             }),
           });
         }

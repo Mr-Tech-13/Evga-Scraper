@@ -13,7 +13,7 @@ export function sendDesktopNotification(link: Link, store: Store) {
       notifier.notify({
         icon: join(
           __dirname,
-          '../../../docs/assets/images/streetmerchant-logo.png'
+          ''
         ),
         message: link.cartUrl ? link.cartUrl : link.url,
         open: link.cartUrl ? link.cartUrl : link.url,
