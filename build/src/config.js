@@ -1,23 +1,4 @@
 "use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -27,7 +8,6 @@ const fs_1 = require("fs");
 const banner_1 = require("./banner");
 const dotenv_1 = __importDefault(require("dotenv"));
 const path_1 = __importDefault(require("path"));
-const console = __importStar(require("console"));
 if (process.env.npm_config_conf) {
     if (fs_1.existsSync(path_1.default.resolve(__dirname, '../../' + process.env.npm_config_conf))) {
         dotenv_1.default.config({
@@ -40,6 +20,9 @@ if (process.env.npm_config_conf) {
 }
 else if (fs_1.existsSync(path_1.default.resolve(__dirname, '../../dotenv'))) {
     dotenv_1.default.config({ path: path_1.default.resolve(__dirname, '../../dotenv') });
+}
+else if (fs_1.existsSync(path_1.default.resolve(__dirname, '../dotenv'))) {
+    dotenv_1.default.config({ path: path_1.default.resolve(__dirname, '../dotenv') });
 }
 else {
     dotenv_1.default.config({ path: path_1.default.resolve(__dirname, '../../.env') });
@@ -169,6 +152,14 @@ const browser = {
     open: envOrBoolean(process.env.OPEN_BROWSER),
     userAgent: '',
 };
+const captchaHandler = {
+    captureType: envOrString(process.env.CAPTCHA_HANDLER_CAPTURE_TYPE),
+    pollInterval: envOrNumber(process.env.CAPTCHA_HANDLER_POLL_INTERVAL, 5),
+    responseTimeout: envOrNumber(process.env.CAPTCHA_HANDLER_RESPONSE_TIMEOUT, 300),
+    service: envOrString(process.env.CAPTCHA_HANDLER_SERVICE),
+    token: envOrString(process.env.CAPTCHA_HANDLER_TOKEN),
+    userId: envOrString(process.env.CAPTCHA_HANDLER_USER_ID),
+};
 const docker = envOrBoolean(process.env.DOCKER, false);
 const logLevel = envOrString(process.env.LOG_LEVEL, 'info');
 const notifications = {
@@ -187,10 +178,13 @@ const notifications = {
             3060: envOrArray(process.env.DISCORD_NOTIFY_GROUP_3060),
             '3060ti': envOrArray(process.env.DISCORD_NOTIFY_GROUP_3060TI),
             3070: envOrArray(process.env.DISCORD_NOTIFY_GROUP_3070),
+            '3070ti': envOrArray(process.env.DISCORD_NOTIFY_GROUP_3070TI),
             3080: envOrArray(process.env.DISCORD_NOTIFY_GROUP_3080),
+            '3080ti': envOrArray(process.env.DISCORD_NOTIFY_GROUP_3080TI),
             3090: envOrArray(process.env.DISCORD_NOTIFY_GROUP_3090),
             'captcha-deterrent': [],
             darkhero: envOrArray(process.env.DISCORD_NOTIFY_GROUP_DARKHERO),
+            rx6700xt: envOrArray(process.env.DISCORD_NOTIFY_GROUP_RX6700XT),
             rx6800: envOrArray(process.env.DISCORD_NOTIFY_GROUP_RX6800),
             rx6800xt: envOrArray(process.env.DISCORD_NOTIFY_GROUP_RX6800XT),
             rx6900xt: envOrArray(process.env.DISCORD_NOTIFY_GROUP_RX6900XT),
@@ -204,8 +198,6 @@ const notifications = {
             'test:series': envOrArray(process.env.DISCORD_NOTIFY_GROUP_TEST),
             xboxss: envOrArray(process.env.DISCORD_NOTIFY_GROUP_XBOXSS),
             xboxsx: envOrArray(process.env.DISCORD_NOTIFY_GROUP_XBOXSX),
-            evga: envOrArray(process.env.DISCORD_NOTIFY_GROUP_EVGA),
-            zotac: envOrArray(process.env.DISCORD_NOTIFY_GROUP_ZOTAC),
         },
         webhooks: envOrArray(process.env.DISCORD_WEB_HOOK),
     },
@@ -215,6 +207,11 @@ const notifications = {
         smtpPort: envOrNumber(process.env.SMTP_PORT, 25),
         to: envOrString(process.env.EMAIL_TO, envOrString(process.env.EMAIL_USERNAME)),
         username: envOrString(process.env.EMAIL_USERNAME),
+    },
+    gotify: {
+        priority: envOrNumber(process.env.GOTIFY_PRIORITY),
+        token: envOrString(process.env.GOTIFY_TOKEN),
+        url: envOrString(process.env.GOTIFY_URL),
     },
     mqtt: {
         broker: envOrString(process.env.MQTT_BROKER_ADDRESS),
@@ -272,6 +269,7 @@ const notifications = {
         sound: envOrString(process.env.PUSHOVER_SOUND, 'pushover'),
         token: envOrString(process.env.PUSHOVER_TOKEN),
         username: envOrString(process.env.PUSHOVER_USER),
+        device: envOrString(process.env.PUSHOVER_DEVICE),
     },
     redis: {
         url: envOrString(process.env.REDIS_URL),
@@ -279,10 +277,6 @@ const notifications = {
     slack: {
         channel: envOrString(process.env.SLACK_CHANNEL),
         token: envOrString(process.env.SLACK_TOKEN),
-    },
-    smartthings: {
-        token: envOrString(process.env.SMARTTHINGS_TOKEN),
-        device: envOrString(process.env.SMARTTHINGS_SWITCH_LABEL),
     },
     soundPlayer: envOrString(process.env.SOUND_PLAYER),
     telegram: {
@@ -316,6 +310,10 @@ const notifications = {
         soundHref: envOrString(process.env.STREAMLABS_SOUND),
         duration: envOrNumber(process.env.STREAMLABS_DURATION),
     },
+    freemobile: {
+        id: envOrString(process.env.FREEMOBILE_ID),
+        apiKey: envOrString(process.env.FREEMOBILE_API_KEY),
+    },
 };
 const nvidia = {
     addToCardAttempts: envOrNumber(process.env.NVIDIA_ADD_TO_CART_ATTEMPTS, 10),
@@ -325,6 +323,7 @@ const page = {
     height: 1080,
     inStockWaitTime: envOrNumber(process.env.IN_STOCK_WAIT_TIME),
     screenshot: envOrBoolean(process.env.SCREENSHOT),
+    screenshotDir: envOrString(process.env.SCREENSHOT_DIR, 'screenshots'),
     timeout: envOrNumber(process.env.PAGE_TIMEOUT, 30000),
     width: 1920,
 };
@@ -345,10 +344,13 @@ const store = {
             3060: envOrNumber(process.env.MAX_PRICE_SERIES_3060),
             '3060ti': envOrNumber(process.env.MAX_PRICE_SERIES_3060TI),
             3070: envOrNumber(process.env.MAX_PRICE_SERIES_3070),
+            '3070ti': envOrNumber(process.env.MAX_PRICE_SERIES_3070TI),
             3080: envOrNumber(process.env.MAX_PRICE_SERIES_3080),
+            '3080ti': envOrNumber(process.env.MAX_PRICE_SERIES_3080TI),
             3090: envOrNumber(process.env.MAX_PRICE_SERIES_3090),
             'captcha-deterrent': 0,
             darkhero: envOrNumber(process.env.MAX_PRICE_SERIES_DARKHERO),
+            rx6700xt: envOrNumber(process.env.MAX_PRICE_SERIES_RX6700XT),
             rx6800: envOrNumber(process.env.MAX_PRICE_SERIES_RX6800),
             rx6800xt: envOrNumber(process.env.MAX_PRICE_SERIES_RX6800XT),
             rx6900xt: envOrNumber(process.env.MAX_PRICE_SERIES_RX6900XT),
@@ -362,8 +364,6 @@ const store = {
             'test:series': envOrNumber(process.env.MAX_PRICE_SERIES_TEST),
             xboxss: envOrNumber(process.env.MAX_PRICE_SERIES_XBOXSS),
             xboxsx: envOrNumber(process.env.MAX_PRICE_SERIES_XBOXSX),
-            evga: envOrNumber(process.env.MAX_PRICE_SERIES_EVGA),
-            zotac: envOrNumber(process.env.MAX_PRICE_SERIES_ZOTAC),
         },
     },
     microCenterLocation: envOrArray(process.env.MICROCENTER_LOCATION, ['web']),
@@ -380,8 +380,11 @@ const store = {
         '3060',
         '3060ti',
         '3070',
+        '3070ti',
         '3080',
+        '3080ti',
         '3090',
+        'rx6700xt',
         'rx6800',
         'rx6800xt',
         'rx6900xt',
@@ -390,12 +393,10 @@ const store = {
         'ryzen5900',
         'ryzen5950',
         'sf',
-        //  'test:series',
         'sonyps5c',
         'sonyps5de',
         'xboxss',
         'xboxsx',
-        'zotac',
     ]),
     stores: envOrArray(process.env.STORES, ['amazon', 'bestbuy']).map(entry => {
         var _a;
@@ -419,6 +420,7 @@ exports.defaultStoreData = {
 };
 exports.config = {
     browser,
+    captchaHandler,
     docker,
     logLevel,
     notifications,

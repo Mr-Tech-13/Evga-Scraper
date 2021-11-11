@@ -5,8 +5,8 @@ exports.Xbox = {
     currency: '$',
     labels: {
         outOfStock: {
-            container: '.src-pages-BundleBuilder-components-BundleBuilderHeader-__BundleBuilderHeader-module___checkoutButton',
-            text: ['out of stock'],
+            container: '[class="BundleBuilderHeader-module__checkoutButton___3UyEq w-100 bg-light-green btn btn-primary"]',
+            text: ['Out of stock'],
         },
     },
     links: [

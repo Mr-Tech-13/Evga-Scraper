@@ -16,19 +16,21 @@ function addNewLinks(store, links, series) {
     const existingUrls = new Set(store.links.map(link => link.url));
     const newLinks = links.filter(link => !existingUrls.has(link.url));
     if (newLinks.length === 0) {
+        logger_1.logger.debug(logger_1.Print.message('NO NEW LINKS FOUND', series, store, true));
         return;
     }
-    logger_1.logger.debug(logger_1.Print.message(`FOUND ${newLinks.length} STORE LINKS`, series, store, true));
+    logger_1.logger.debug(logger_1.Print.message(`FOUND ${newLinks.length} NEW LINKS`, series, store, true));
     logger_1.logger.debug(JSON.stringify(newLinks, null, 2));
     store.links = store.links.concat(newLinks);
 }
 async function fetchLinks(store, browser) {
-    if (!store.linksBuilder) {
+    const linksBuilder = store.linksBuilder;
+    if (!linksBuilder) {
         return;
     }
     const promises = [];
     // eslint-disable-next-line prefer-const
-    for (let { series, url } of store.linksBuilder.urls) {
+    for (let { series, url } of linksBuilder.urls) {
         if (!filter_1.filterSeries(series)) {
             continue;
         }
@@ -36,14 +38,21 @@ async function fetchLinks(store, browser) {
         if (!Array.isArray(url)) {
             url = [url];
         }
-        url.map(x => promises.push(util_1.usingResponse(browser, x, async (response) => {
-            const text = await (response === null || response === void 0 ? void 0 : response.text());
-            if (!text) {
+        url.map(x => promises.push(util_1.usingPage(browser, async (page) => {
+            const waitUntil = linksBuilder.waitUntil
+                ? linksBuilder.waitUntil
+                : 'domcontentloaded';
+            await page.goto(x, { waitUntil });
+            if (linksBuilder.waitForSelector) {
+                await page.waitForSelector(linksBuilder.waitForSelector);
+            }
+            const html = await page.content();
+            if (!html) {
                 logger_1.logger.error(logger_1.Print.message('NO RESPONSE', series, store, true));
                 return;
             }
-            const docElement = cheerio_1.default.load(text).root();
-            const links = store.linksBuilder.builder(docElement, series);
+            const docElement = cheerio_1.default.load(html).root();
+            const links = linksBuilder.builder(docElement, series);
             addNewLinks(store, links, series);
         })));
     }

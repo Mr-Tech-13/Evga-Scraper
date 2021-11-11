@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Equippr = void 0;
+const card_1 = require("./helpers/card");
 exports.Equippr = {
     currency: '€',
     labels: {
@@ -90,7 +91,51 @@ exports.Equippr = {
             series: '3080',
             url: 'https://www.equippr.de/evga-geforce-rtx-3080-xc3-gaming-10-gb-gddr6x-retail-2061391.html',
         },
+        {
+            brand: 'asus',
+            model: 'strix oc',
+            series: 'rx6700xt',
+            url: 'https://www.equippr.de/asus-radeon-rx-6700-xt-rog-strix-oc-12-gb-gddr6-retail-2072469.html',
+        },
     ],
     name: 'equippr',
+    linksBuilder: {
+        builder: card_1.getProductLinksBuilder({
+            productsSelector: '.product--box',
+            sitePrefix: 'https://www.equippr.de/',
+            titleSelector: 'a.product--title',
+        }),
+        ttl: 1,
+        urls: [
+            {
+                series: '3060',
+                url: 'https://www.equippr.de/computer-elektronik/pc-komponenten/grafikkarten/nvidia-geforce-rtx/?p=1&o=8&n=120&f=67374',
+            },
+            {
+                series: '3060ti',
+                url: 'https://www.equippr.de/computer-elektronik/pc-komponenten/grafikkarten/nvidia-geforce-rtx/?p=1&o=8&n=120&f=66256',
+            },
+            {
+                series: '3070',
+                url: 'https://www.equippr.de/computer-elektronik/pc-komponenten/grafikkarten/nvidia-geforce-rtx/?p=1&o=8&n=120&f=66230',
+            },
+            {
+                series: '3070ti',
+                url: 'https://www.equippr.de/computer-elektronik/pc-komponenten/grafikkarten/nvidia-geforce-rtx/?p=1&o=8&n=120&f=69119',
+            },
+            {
+                series: '3080',
+                url: 'https://www.equippr.de/computer-elektronik/pc-komponenten/grafikkarten/nvidia-geforce-rtx/?p=1&o=8&n=120&f=66221',
+            },
+            {
+                series: '3080ti',
+                url: 'https://www.equippr.de/computer-elektronik/pc-komponenten/grafikkarten/nvidia-geforce-rtx/?p=1&o=8&n=120&f=69117',
+            },
+            {
+                series: '3090',
+                url: 'https://www.equippr.de/computer-elektronik/pc-komponenten/grafikkarten/nvidia-geforce-rtx/?p=1&o=8&n=120&f=66208',
+            },
+        ],
+    },
 };
 //# sourceMappingURL=equippr.js.map

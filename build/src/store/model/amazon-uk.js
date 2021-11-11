@@ -9,6 +9,11 @@ exports.AmazonUk = {
             container: 'body',
             text: ['enter the characters you see below'],
         },
+        captchaHandler: {
+            challenge: '.a-row > img',
+            input: '#captchacharacters',
+            submit: 'button[type="submit"]',
+        },
         inStock: {
             container: '#availability',
             text: ['in stock'],

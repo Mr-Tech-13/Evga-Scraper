@@ -19,6 +19,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.launchBrowser = void 0;
 const Process = __importStar(require("process"));
 const config_1 = require("./config"); // Needs to be loaded first
 const web_1 = require("./web");
@@ -45,39 +46,7 @@ async function restartMain() {
  * Starts the bot.
  */
 async function main() {
-    const args = [];
-    // Skip Chromium Linux Sandbox
-    // https://github.com/puppeteer/puppeteer/blob/main/docs/troubleshooting.md#setting-up-chrome-linux-sandbox
-    if (config_1.config.browser.isTrusted) {
-        args.push('--no-sandbox');
-        args.push('--disable-setuid-sandbox');
-    }
-    // https://github.com/puppeteer/puppeteer/blob/main/docs/troubleshooting.md#tips
-    // https://stackoverflow.com/questions/48230901/docker-alpine-with-node-js-and-chromium-headless-puppeter-failed-to-launch-c
-    if (config_1.config.docker) {
-        args.push('--disable-dev-shm-usage');
-        args.push('--no-sandbox');
-        args.push('--disable-setuid-sandbox');
-        args.push('--headless');
-        args.push('--disable-gpu');
-    }
-    // Add the address of the proxy server if defined
-    if (config_1.config.proxy.address) {
-        args.push(`--proxy-server=${config_1.config.proxy.protocol}://${config_1.config.proxy.address}:${config_1.config.proxy.port}`);
-    }
-    if (args.length > 0) {
-        logger_1.logger.info('ℹ puppeteer config: ', args);
-    }
-    await stop();
-    browser = await puppeteer_1.launch({
-        args,
-        defaultViewport: {
-            height: config_1.config.page.height,
-            width: config_1.config.page.width,
-        },
-        headless: config_1.config.browser.isHeadless,
-    });
-    config_1.config.browser.userAgent = await browser.userAgent();
+    browser = await launchBrowser();
     for (const store of model_1.storeList.values()) {
         logger_1.logger.debug('store links', { meta: { links: store.links } });
         if (store.setupAction !== undefined) {
@@ -113,6 +82,44 @@ async function loopMain() {
         setTimeout(loopMain, 5000);
     }
 }
+async function launchBrowser() {
+    const args = [];
+    // Skip Chromium Linux Sandbox
+    // https://github.com/puppeteer/puppeteer/blob/main/docs/troubleshooting.md#setting-up-chrome-linux-sandbox
+    if (config_1.config.browser.isTrusted) {
+        args.push('--no-sandbox');
+        args.push('--disable-setuid-sandbox');
+    }
+    // https://github.com/puppeteer/puppeteer/blob/main/docs/troubleshooting.md#tips
+    // https://stackoverflow.com/questions/48230901/docker-alpine-with-node-js-and-chromium-headless-puppeter-failed-to-launch-c
+    if (config_1.config.docker) {
+        args.push('--disable-dev-shm-usage');
+        args.push('--no-sandbox');
+        args.push('--disable-setuid-sandbox');
+        args.push('--headless');
+        args.push('--disable-gpu');
+        config_1.config.browser.open = false;
+    }
+    // Add the address of the proxy server if defined
+    if (config_1.config.proxy.address) {
+        args.push(`--proxy-server=${config_1.config.proxy.protocol}://${config_1.config.proxy.address}:${config_1.config.proxy.port}`);
+    }
+    if (args.length > 0) {
+        logger_1.logger.info('ℹ puppeteer config: ', args);
+    }
+    await stop();
+    const browser = await puppeteer_1.launch({
+        args,
+        defaultViewport: {
+            height: config_1.config.page.height,
+            width: config_1.config.page.width,
+        },
+        headless: config_1.config.browser.isHeadless,
+    });
+    config_1.config.browser.userAgent = await browser.userAgent();
+    return browser;
+}
+exports.launchBrowser = launchBrowser;
 void loopMain();
 process.on('SIGINT', stopAndExit);
 process.on('SIGQUIT', stopAndExit);

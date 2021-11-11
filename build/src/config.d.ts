@@ -15,6 +15,14 @@ export declare const config: {
         open: boolean;
         userAgent: string;
     };
+    captchaHandler: {
+        captureType: string;
+        pollInterval: number;
+        responseTimeout: number;
+        service: string;
+        token: string;
+        userId: string;
+    };
     docker: boolean;
     logLevel: string;
     notifications: {
@@ -33,10 +41,13 @@ export declare const config: {
                 3060: string[];
                 '3060ti': string[];
                 3070: string[];
+                '3070ti': string[];
                 3080: string[];
+                '3080ti': string[];
                 3090: string[];
                 'captcha-deterrent': never[];
                 darkhero: string[];
+                rx6700xt: string[];
                 rx6800: string[];
                 rx6800xt: string[];
                 rx6900xt: string[];
@@ -50,8 +61,6 @@ export declare const config: {
                 'test:series': string[];
                 xboxss: string[];
                 xboxsx: string[];
-                evga: string[];
-                zotac: string[];
             };
             webhooks: string[];
         };
@@ -61,6 +70,11 @@ export declare const config: {
             smtpPort: number;
             to: string;
             username: string;
+        };
+        gotify: {
+            priority: number;
+            token: string;
+            url: string;
         };
         mqtt: {
             broker: string;
@@ -101,6 +115,7 @@ export declare const config: {
             sound: string;
             token: string;
             username: string;
+            device: string;
         };
         redis: {
             url: string;
@@ -108,10 +123,6 @@ export declare const config: {
         slack: {
             channel: string;
             token: string;
-        };
-        smartthings: {
-            token: string;
-            device: string;
         };
         soundPlayer: string;
         telegram: {
@@ -145,6 +156,10 @@ export declare const config: {
             soundHref: string;
             duration: number;
         };
+        freemobile: {
+            id: string;
+            apiKey: string;
+        };
     };
     nvidia: {
         addToCardAttempts: number;
@@ -154,6 +169,7 @@ export declare const config: {
         height: number;
         inStockWaitTime: number;
         screenshot: boolean;
+        screenshotDir: string;
         timeout: number;
         width: number;
     };
@@ -170,10 +186,13 @@ export declare const config: {
                 3060: number;
                 '3060ti': number;
                 3070: number;
+                '3070ti': number;
                 3080: number;
+                '3080ti': number;
                 3090: number;
                 'captcha-deterrent': number;
                 darkhero: number;
+                rx6700xt: number;
                 rx6800: number;
                 rx6800xt: number;
                 rx6900xt: number;
@@ -187,8 +206,6 @@ export declare const config: {
                 'test:series': number;
                 xboxss: number;
                 xboxsx: number;
-                evga: number;
-                zotac: number;
             };
         };
         microCenterLocation: string[];

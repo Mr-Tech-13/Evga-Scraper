@@ -5,35 +5,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 const open_1 = __importDefault(require("open"));
-const notification_1 = require("../../src/notification");
+const messaging_1 = require("../../src/messaging");
 const config_1 = require("../../src/config");
-const link = {
-    brand: 'test:brand',
-    cartUrl: 'https://www.example.com/cartUrl',
-    model: 'test:model',
-    price: 100,
-    series: 'test:series',
-    url: 'https://www.example.com/url',
-};
-const store = {
-    currency: '',
-    labels: {
-        inStock: {
-            container: 'test:container',
-            text: ['test:text'],
-        },
-    },
-    links: [link],
-    name: 'test:name',
-};
+const util_1 = require("../util");
+const store = util_1.getTestStore();
+const link = store.links[0];
 /**
  * Send test email.
  */
-notification_1.sendNotification(link, store);
+messaging_1.sendNotification(link, store);
 /**
  * Open browser.
  */
-if (config_1.config.browser.open) {
+if (!config_1.config.docker && config_1.config.browser.open) {
     open_1.default((_a = link.cartUrl) !== null && _a !== void 0 ? _a : link.url);
     open_1.default(link.url);
 }

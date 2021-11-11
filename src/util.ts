@@ -1,3 +1,4 @@
+import {unlinkSync} from 'fs';
 import {Browser, Page, HTTPResponse} from 'puppeteer';
 import {StatusCodeRangeArray, Store} from './store/model';
 import {config} from './config';
@@ -86,11 +87,12 @@ export async function closePage(page: Page) {
 }
 
 export async function getRandomUserAgent(): Promise<string> {
-  const deprecatedUserAgent = (process.env.USER_AGENT
-    ? process.env.USER_AGENT.includes('\n')
-      ? process.env.USER_AGENT.split('\n')
-      : process.env.USER_AGENT.split(',')
-    : []
+  const deprecatedUserAgent = (
+    process.env.USER_AGENT
+      ? process.env.USER_AGENT.includes('\n')
+        ? process.env.USER_AGENT.split('\n')
+        : process.env.USER_AGENT.split(',')
+      : []
   ).map(s => s.trim());
 
   if (deprecatedUserAgent.length > 0) {
@@ -103,4 +105,12 @@ export async function getRandomUserAgent(): Promise<string> {
     topUserAgents[Math.floor(Math.random() * topUserAgents.length)];
   logger.debug('user agent', {userAgent});
   return userAgent;
+}
+
+export function deleteFile(path: string) {
+  try {
+    unlinkSync(path);
+  } catch (error: unknown) {
+    logger.error('unable to delete file', error);
+  }
 }

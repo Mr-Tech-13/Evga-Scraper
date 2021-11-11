@@ -8,3 +8,4 @@ export declare function usingResponse<T>(browser: Browser, url: string, cb: (res
 export declare function usingPage<T>(browser: Browser, cb: (page: Page, browser: Browser) => Promise<T>): Promise<T>;
 export declare function closePage(page: Page): Promise<void>;
 export declare function getRandomUserAgent(): Promise<string>;
+export declare function deleteFile(path: string): void;

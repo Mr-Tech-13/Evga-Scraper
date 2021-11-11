@@ -9,6 +9,7 @@ const path_1 = require("path");
 const logger_1 = require("../logger");
 const approot = path_1.join(__dirname, '../../../');
 const webroot = path_1.join(approot, './web');
+const screenshotDir = path_1.join(approot, config_1.config.page.screenshotDir);
 const contentTypeMap = {
     css: 'text/css',
     htm: 'text/html',
@@ -111,10 +112,10 @@ function handleAPI(request, response, urlComponents) {
                     sendError(response, 'Invalid screenshot timestamp', 400);
                     return;
                 }
-                sendFile(response, `../success-${timeStamp}.png`);
+                sendFile(response, `success-${timeStamp}.png`, screenshotDir);
                 return;
             }
-            fs_1.readdir(approot, (error, files) => {
+            fs_1.readdir(screenshotDir, (error, files) => {
                 if (error) {
                     sendError(response, error.message);
                     return;

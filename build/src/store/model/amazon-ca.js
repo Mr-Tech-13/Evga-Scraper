@@ -8,6 +8,11 @@ exports.AmazonCa = {
             container: 'body',
             text: ['enter the characters you see below'],
         },
+        captchaHandler: {
+            challenge: 'img',
+            input: '#captchacharacters',
+            submit: 'button[type="submit"]',
+        },
         inStock: {
             container: '#desktop_buybox',
             text: ['add to cart'],
@@ -234,6 +239,12 @@ exports.AmazonCa = {
         {
             brand: 'microsoft',
             cartUrl: 'https://www.amazon.ca/gp/aws/cart/add.html?ASIN.1=B08H75RTZ8&Quantity.1=1',
+            labels: {
+                inStock: {
+                    container: '#productTitle',
+                    text: ['Xbox Series X'],
+                },
+            },
             model: 'xbox series x',
             series: 'xboxsx',
             url: 'https://www.amazon.ca/dp/B08H75RTZ8',
@@ -241,6 +252,12 @@ exports.AmazonCa = {
         {
             brand: 'microsoft',
             cartUrl: 'https://www.amazon.ca/gp/aws/cart/add.html?ASIN.1=B08G9J44ZN&Quantity.1=1',
+            labels: {
+                inStock: {
+                    container: '#productTitle',
+                    text: ['Xbox Series S'],
+                },
+            },
             model: 'xbox series s',
             series: 'xboxss',
             url: 'https://www.amazon.ca/dp/B08G9J44ZN',

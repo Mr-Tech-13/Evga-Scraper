@@ -12,6 +12,11 @@ exports.AmazonDeWarehouse = {
                 'geben sie die zeichen unten ein',
             ],
         },
+        captchaHandler: {
+            challenge: '.a-row > img',
+            input: '#captchacharacters',
+            submit: 'button[type="submit"]',
+        },
         inStock: {
             container: '#a-autoid-0-announce',
             text: ['In den Einkaufswagen'],

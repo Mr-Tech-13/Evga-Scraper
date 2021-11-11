@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.parseCard = exports.getProductLinksBuilder = void 0;
 const logger_1 = require("../../../logger");
-const isPartialUrlRegExp = /^\/[^/]/i;
+const isPartialUrlRegExp = /^(?!https?:).*/i;
 function getProductLinksBuilder(options) {
     return (docElement, series) => {
         var _a, _b, _c;

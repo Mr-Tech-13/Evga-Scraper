@@ -8,6 +8,11 @@ exports.AmazonNl = {
             container: 'body',
             text: ['voer de karakters in die u hieronder ziet'],
         },
+        captchaHandler: {
+            challenge: '.a-row > img',
+            input: '#captchacharacters',
+            submit: 'button[type="submit"]',
+        },
         inStock: [
             {
                 container: '#add-to-cart-button',

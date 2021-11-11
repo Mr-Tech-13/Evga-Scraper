@@ -3,7 +3,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getRandomUserAgent = exports.closePage = exports.usingPage = exports.usingResponse = exports.isStatusCodeInRange = exports.noop = exports.delay = exports.getSleepTime = void 0;
+exports.deleteFile = exports.getRandomUserAgent = exports.closePage = exports.usingPage = exports.usingResponse = exports.isStatusCodeInRange = exports.noop = exports.delay = exports.getSleepTime = void 0;
+const fs_1 = require("fs");
 const config_1 = require("./config");
 const adblocker_1 = require("./adblocker");
 const logger_1 = require("./logger");
@@ -86,4 +87,13 @@ async function getRandomUserAgent() {
     return userAgent;
 }
 exports.getRandomUserAgent = getRandomUserAgent;
+function deleteFile(path) {
+    try {
+        fs_1.unlinkSync(path);
+    }
+    catch (error) {
+        logger_1.logger.error('unable to delete file', error);
+    }
+}
+exports.deleteFile = deleteFile;
 //# sourceMappingURL=util.js.map

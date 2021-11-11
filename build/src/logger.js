@@ -93,7 +93,7 @@ exports.Print = {
             return ('✖ ' +
                 buildProductString(link, store, true) +
                 ' :: ' +
-                chalk_1.default.yellow(`PRICE ${(_a = link.price) !== null && _a !== void 0 ? _a : ''} EXCEEDS LIMIT ${maxPrice}`));
+                chalk_1.default.yellow(`IN STOCK, PRICE ${(_a = link.price) !== null && _a !== void 0 ? _a : ''} EXCEEDS LIMIT ${maxPrice}`));
         }
         return `✖ ${buildProductString(link, store)} :: PRICE ${(_b = link.price) !== null && _b !== void 0 ? _b : ''} EXCEEDS LIMIT ${maxPrice}`;
     },

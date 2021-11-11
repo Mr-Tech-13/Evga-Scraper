@@ -1,4 +1,4 @@
-import {Link, Store} from './store';
+import {Store} from './store';
 
 export const AmazonUk: Store = {
   backoffStatusCodes: [403, 429, 503],
@@ -7,6 +7,11 @@ export const AmazonUk: Store = {
     captcha: {
       container: 'body',
       text: ['enter the characters you see below'],
+    },
+    captchaHandler: {
+      challenge: '.a-row > img',
+      input: '#captchacharacters',
+      submit: 'button[type="submit"]',
     },
     inStock: {
       container: '#availability',
@@ -71,29 +76,25 @@ export const AmazonUk: Store = {
       brand: 'amd',
       model: '5600x',
       series: 'ryzen5600',
-      url:
-        'https://www.amazon.co.uk/AMD-Ryzen-5600X-Processor-Cache/dp/B08166SLDF',
+      url: 'https://www.amazon.co.uk/AMD-Ryzen-5600X-Processor-Cache/dp/B08166SLDF',
     },
     {
       brand: 'amd',
       model: '5800x',
       series: 'ryzen5800',
-      url:
-        'https://www.amazon.co.uk/AMD-Ryzen-5800X-Processor-Cache/dp/B0815XFSGK',
+      url: 'https://www.amazon.co.uk/AMD-Ryzen-5800X-Processor-Cache/dp/B0815XFSGK',
     },
     {
       brand: 'amd',
       model: '5900x',
       series: 'ryzen5900',
-      url:
-        'https://www.amazon.co.uk/AMD-Ryzen-5900X-Processor-Cache/dp/B08164VTWH',
+      url: 'https://www.amazon.co.uk/AMD-Ryzen-5900X-Processor-Cache/dp/B08164VTWH',
     },
     {
       brand: 'amd',
       model: '5950x',
       series: 'ryzen5950',
-      url:
-        'https://www.amazon.co.uk/AMD-Ryzen-5950X-Processor-Cache/dp/B0815Y8J9N',
+      url: 'https://www.amazon.co.uk/AMD-Ryzen-5950X-Processor-Cache/dp/B0815Y8J9N',
     },
     {
       brand: 'asus',

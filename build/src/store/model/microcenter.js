@@ -346,6 +346,10 @@ exports.MicroCenter = {
             container: '#pnlInventory',
             text: ['in stock'],
         },
+        outOfStock: {
+            container: '.inventoryCnt',
+            text: ['0'],
+        },
         maxPrice: {
             container: 'span[id="pricing"]',
             euroFormat: false,

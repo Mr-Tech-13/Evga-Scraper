@@ -246,6 +246,12 @@ exports.Ldlc = {
             series: '3080',
             url: 'https://www.ldlc.com/fr-be/fiche/PB00398373.html',
         },
+        {
+            brand: 'asrock',
+            model: 'amd reference',
+            series: 'rx6700xt',
+            url: 'https://www.ldlc.com/fiche/PB00412453.html',
+        },
     ],
     name: 'ldlc',
 };

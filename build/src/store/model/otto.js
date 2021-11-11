@@ -64,12 +64,24 @@ exports.Otto = {
         },
         {
             brand: 'microsoft',
+            labels: {
+                inStock: {
+                    container: '.js_shortInfo__variationName.prd_shortInfo__variationName',
+                    text: ['Xbox Series S'],
+                },
+            },
             model: 'xbox series s',
             series: 'xboxss',
             url: 'https://www.otto.de/p/xbox-series-s-1229056876/#variationId=1229056877',
         },
         {
             brand: 'microsoft',
+            labels: {
+                inStock: {
+                    container: '.js_shortInfo__variationName.prd_shortInfo__variationName',
+                    text: ['Xbox Series X'],
+                },
+            },
             model: 'xbox series x',
             series: 'xboxsx',
             url: 'https://www.otto.de/p/xbox-series-x-1229057353#variationId=1229057354',

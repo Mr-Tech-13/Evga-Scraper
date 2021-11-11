@@ -69,6 +69,13 @@ exports.Amd = {
             series: 'rx6800',
             url: 'https://www.amd.com/en/direct-buy/5458373400/us',
         },
+        {
+            brand: 'amd',
+            cartUrl: 'https://www.amd.com/en/direct-buy/5496921500/us?add-to-cart=true',
+            model: 'amd reference',
+            series: 'rx6800xt',
+            url: 'https://www.amd.com/en/direct-buy/5496921500/us',
+        },
     ],
     name: 'amd',
 };
