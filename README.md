@@ -1,6 +1,9 @@
 EVGA-Restock-Alert
 Scans evga product pages for restocks
 
+**Project Status**
+*MAINTNENCE*
+No new releases for a long period of time, due to the code being almost perfect
 **Description**
 
 This uses code from streetmerchant (https://github.com/jef/streetmerchant), and I modified it so that it will track EVGA.
